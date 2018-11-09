@@ -1,0 +1,40 @@
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:admin="http://webns.net/mvcb/">
+<foaf:PersonalProfileDocument rdf:about="">
+  <foaf:maker rdf:resource="#me"/>
+  <foaf:primaryTopic rdf:resource="#me"/>
+  <admin:generatorAgent rdf:resource="http://www.ldodds.com/foaf/foaf-a-matic"/>
+  <admin:errorReportsTo rdf:resource="mailto:leigh@ldodds.com"/>
+</foaf:PersonalProfileDocument>
+<foaf:Person rdf:ID="me">
+<foaf:name>Manuel Costas</foaf:name>
+<foaf:title>Sr</foaf:title>
+<foaf:givenname>Manuel</foaf:givenname>
+<foaf:family_name>Costas</foaf:family_name>
+<foaf:nick>MCostas</foaf:nick>
+<foaf:mbox_sha1sum>26c189ce3ff413d9c6aebb6a89390cccc3892bec</foaf:mbox_sha1sum>
+<foaf:homepage rdf:resource="None"/>
+<foaf:depiction rdf:resource="None"/>
+<foaf:phone rdf:resource="tel:612345097"/>
+<foaf:workplaceHomepage rdf:resource="teleco.uvigo.es"/>
+<foaf:workInfoHomepage rdf:resource="None"/>
+<foaf:schoolHomepage rdf:resource="teleco.uvigo.es"/>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Daniel Couto</foaf:name>
+<foaf:mbox_sha1sum>9a07fbd6087d81fbeeac34016077c329089ba204</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="foaf1.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Andrés Muñoz</foaf:name>
+<foaf:mbox_sha1sum>91fa945bc22deb3a57d435140c5c8e829f58f997</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="foaf2.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Luis Sabucedo</foaf:name>
+<foaf:mbox_sha1sum>5527897769681abb37eaba00d81adbf9a061b020</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="foaf7.rdf"/></foaf:Person></foaf:knows></foaf:Person>
+</rdf:RDF>
