@@ -85,6 +85,8 @@ public class Servlet extends HttpServlet {
 		//form req1
 		out.println("<form action=\"" + this.getServletName() + "\">");
 
+
+		out.println("<h3> request 1 </h3>");
 		out.println("<input type=\"text\" name=\"pantalla\" value=\"response1\"  hidden>");
 
 		out.println("url");
@@ -99,6 +101,7 @@ public class Servlet extends HttpServlet {
 		//form req2
 		out.println("<form action=\"" + this.getServletName() + "\">");
 
+		out.println("<h3> request 2 </h3>");
 		out.println("<input type=\"text\" name=\"pantalla\" value=\"response2\"  hidden>");
 		
 		out.println("url");
@@ -119,6 +122,7 @@ public class Servlet extends HttpServlet {
 		//form req3
 		out.println("<form action=\"" + this.getServletName() + "\">");
 
+		out.println("<h3> request 3 </h3>");
 		out.println("<input type=\"text\" name=\"pantalla\" value=\"response3\"  hidden>");
 		
 		out.println("name1");
