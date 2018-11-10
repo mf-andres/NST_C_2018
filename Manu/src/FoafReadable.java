@@ -39,7 +39,7 @@ public class FoafReadable {
         
         ArrayList<String> foafs = new ArrayList();
 
-        File folder = new File("C:\\Users\\Manuel\\Documents\\NetBeansProjects\\FoafReadable\\src\\FOAF");
+        File folder = new File("C:\\Users\\Manuel\\Documents\\NetBeansProjects\\FoafReadable\\src"); //pendiente de actualizacion
         File[] listOfFiles = folder.listFiles();
 
         for (File file : listOfFiles) {
