@@ -1,0 +1,40 @@
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:admin="http://webns.net/mvcb/">
+<foaf:PersonalProfileDocument rdf:about="">
+  <foaf:maker rdf:resource="#me"/>
+  <foaf:primaryTopic rdf:resource="#me"/>
+  <admin:generatorAgent rdf:resource="http://www.ldodds.com/foaf/foaf-a-matic"/>
+  <admin:errorReportsTo rdf:resource="mailto:leigh@ldodds.com"/>
+</foaf:PersonalProfileDocument>
+<foaf:Person rdf:ID="me">
+<foaf:name>Marta Rodriguez</foaf:name>
+<foaf:title>Sra</foaf:title>
+<foaf:givenname>Marta</foaf:givenname>
+<foaf:family_name>Rodriguez</foaf:family_name>
+<foaf:nick>Sampayo</foaf:nick>
+<foaf:mbox_sha1sum>da0045fd6f6e40d3c74500c985529a75a7e6189c</foaf:mbox_sha1sum>
+<foaf:homepage rdf:resource="None"/>
+<foaf:depiction rdf:resource="None"/>
+<foaf:phone rdf:resource="tel:678465212"/>
+<foaf:workplaceHomepage rdf:resource="teleco.uvigo.es"/>
+<foaf:workInfoHomepage rdf:resource="linkedin/in/marta101294"/>
+<foaf:schoolHomepage rdf:resource="teleco.uvigo.es"/>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Iago Tudela</foaf:name>
+<foaf:mbox_sha1sum>4871ea39e1595f669dcb544443856ea445070d2e</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="foaf4.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Andrea Carballo</foaf:name>
+<foaf:mbox_sha1sum>204742d697ceda6a3f16689571cc8de705bb0208</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="foaf5.rdf"/></foaf:Person></foaf:knows>
+<foaf:knows>
+<foaf:Person>
+<foaf:name>Juan Santos</foaf:name>
+<foaf:mbox_sha1sum>4f39aeb54b7be99b052228ea94adef10704d1695</foaf:mbox_sha1sum>
+<rdfs:seeAlso rdf:resource="foaf8.rdf"/></foaf:Person></foaf:knows></foaf:Person>
+</rdf:RDF>
