@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -34,11 +35,11 @@ public class GraphSearcher {
 		//obten los amigos del nodo actual
 		String[] rootFriends = root.getFriends();
 		
-		System.out.println("On " + root.getName() + " friends are: " );
-		for(String rootFriend : rootFriends) {
-			System.out.println(" " + rootFriend);
-		}
-		
+//		System.out.println("On " + root.getName() + " friends are: " );
+//		for(String rootFriend : rootFriends) {
+//			System.out.println(" " + rootFriend);
+//		}
+
 		ArrayList<Person> newFriends = new ArrayList<Person>();
 		
 		//procesa los amigos
@@ -48,7 +49,8 @@ public class GraphSearcher {
 			Person rootFriendP = people.get(rootFriend);
 			
 			if(rootFriendP == null) {
-				throw(new Exception("Friend " + rootFriend + "of node #" + root.getName() + " not found"));
+				System.out.println("Friend " + rootFriend + "of node #" + root.getName() + " not found");
+				continue;
 			}
 			
 			//lo conocemos ya?
@@ -70,7 +72,22 @@ public class GraphSearcher {
 		return friends.toArray(new String[friends.size()]);
 	}
 
-	public static String[] levelSearchWValue(int level, Person person, TreeMap<String, Person> people) {
+	public static String[] levelSearch(int level, String name, TreeMap<String, Person> people) {
+
+		Person root = people.get(name);
+		
+		if(root == null) {
+			
+			System.out.println("Nodo de inicio de búsqueda no encontrado");
+			return null;
+		}
+		
+		String[] friends = levelSearch(level, root, people);
+		
+		return friends;	
+	}
+
+	public static String[] levelSearchWValue(int level, Person person, String field, String fieldValue, TreeMap<String, Person> people) {
 
 		Person root = person;
 		int currentLevel = 1;
@@ -78,12 +95,11 @@ public class GraphSearcher {
 		ArrayList<String> friendsList = new ArrayList<String>();
 		ArrayList<String> friendWValueList = new ArrayList<String>();
 		
-		
 		String[] friendsWValue = null;
 		
 		
 		try {
-			friendsWValue = search4FriendsWValue(root, root.getFieldValue(),currentLevel, finalLevel, friendsList, friendWValueList, people);
+			friendsWValue = search4FriendsWValue(root, field, fieldValue,currentLevel, finalLevel, friendsList, friendWValueList, people);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,7 +107,7 @@ public class GraphSearcher {
 		return friendsWValue;
 	}
 
-	private static String[] search4FriendsWValue(Person root,  String fieldValue, int currentLevel, int finalLevel,
+	private static String[] search4FriendsWValue(Person root,  String field, String fieldValue, int currentLevel, int finalLevel,
 			ArrayList<String> friends,  ArrayList<String> friendsWValue, TreeMap<String, Person> people) throws Exception {
 		
 		//el origen es amigo de sí mismo
@@ -102,10 +118,10 @@ public class GraphSearcher {
 		//obten los amigos del nodo actual
 		String[] rootFriends = root.getFriends();
 		
-		System.out.println("On " + root.getName() + " friends are: " );
-		for(String rootFriend : rootFriends) {
-			System.out.println(" " + rootFriend);
-		}
+//		System.out.println("On " + root.getName() + " friends are: " );
+//		for(String rootFriend : rootFriends) {
+//			System.out.println(" " + rootFriend);
+//		}
 		
 		ArrayList<Person> newFriends = new ArrayList<Person>();
 		
@@ -116,7 +132,8 @@ public class GraphSearcher {
 			Person rootFriendP = people.get(rootFriend);
 			
 			if(rootFriendP == null) {
-				throw(new Exception("Friend " + rootFriend + "of node #" + root.getName() + " not found"));
+				System.out.println("Friend " + rootFriend + "of node #" + root.getName() + " not found");
+				continue;
 			}
 			
 			//lo conocemos ya?
@@ -127,7 +144,8 @@ public class GraphSearcher {
 				friends.add(rootFriend);
 				
 				//comparamos el campo 
-				if(rootFriendP.fieldValue == fieldValue) {
+				String obtainedFieldValue = rootFriendP.getField(field);
+				if( obtainedFieldValue.equals(fieldValue)) {
 					friendsWValue.add(rootFriend);
 				}
 			}
@@ -136,10 +154,27 @@ public class GraphSearcher {
 		//si no es el último nivel busca a partir de los nuevos amigos
 		if(currentLevel < finalLevel) {
 			for(Person newFriend : newFriends) {
-				search4FriendsWValue(newFriend, fieldValue, currentLevel + 1, finalLevel, friends, friendsWValue, people);
+				search4FriendsWValue(newFriend, field, fieldValue, currentLevel + 1, finalLevel, friends, friendsWValue, people);
 			}
 		}
 		
 		return friendsWValue.toArray(new String[friendsWValue.size()]);
+	}
+
+	public static String[] levelSearchWValue(int level, String name, String field, String value, TreeMap<String, Person> people) throws IOException {
+		
+		Person root = people.get(name);
+		
+		if(root == null) {
+			
+			System.out.println("Nodo de inicio de búsqueda no encontrado");
+			return null;
+		}
+		
+		
+		String[] friendWValueList = levelSearchWValue(level, root, field, value, people);
+		
+		return friendWValueList;
 	}	
+	
 }

@@ -1,28 +1,22 @@
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Person {
 
 	String name;
 	String[] friends;
-	String fieldValue;
+	String[][] fields;
 	
 	Person(String name, String[] friends){
 		this.name = name;
 		this.friends = friends;
 	}
 	
-	Person(String fieldValue, String name, String[] friends){
-		this.name = name;
-		this.friends = friends;
-		this.fieldValue = fieldValue;
-	}
-	
-	public String getFieldValue() {
-		return fieldValue;
-	}
-
-	public void setFieldValue(String fieldValue) {
-		this.fieldValue = fieldValue;
+	public Person(String foafName, String[] foafFriends, String[][] foafField) {
+		
+		this.name = foafName;
+		this.friends = foafFriends;
+		this.fields = foafField;
 	}
 
 	public String getName() {
@@ -40,4 +34,21 @@ public class Person {
 	public void setFriends(String[] friends) {
 		this.friends = friends;
 	}
+	
+	public String getField(String field) {
+		
+		for(String[] parCampoValor : fields) {
+			
+			if(parCampoValor[0].equals(field)) {
+				
+				return parCampoValor[1];
+			}
+		}
+		
+		return null;
+	}
+
+	public void setFields(String[][] fields) {
+		this.fields = fields;
+	}	
 }

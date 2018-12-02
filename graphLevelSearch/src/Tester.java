@@ -1,82 +1,46 @@
+import java.io.IOException;
 import java.util.TreeMap;
 
 public class Tester {
 
 	public static void main(String[] args) {
-
-//		//construye el grafo
-//		Person A = new Person("A",new String[]{"B","C"});
-//		Person B = new Person("B",new String[]{"A","C","D"});
-//		Person C = new Person("C",new String[]{"A","C","E"});
-//		Person D = new Person("D",new String[]{"B"});
-//		Person E = new Person("E",new String[]{"C"});
-//		
-//		//lista de persona para simular el input
-//		TreeMap<String, Person> people = new TreeMap<>();
-//		people.put(A.getName(), A);
-//		people.put(B.getName(), B);
-//		people.put(C.getName(), C);
-//		people.put(D.getName(), D);
-//		people.put(E.getName(), E);
 		
-//		//construye el grafo
-//		Person A = new Person("A",new String[]{"B"});
-//		Person B = new Person("B",new String[]{"A","C","D"});
-//		Person C = new Person("C",new String[]{"B"});
-//		Person D = new Person("D",new String[]{"B","E","F"});
-//		Person E = new Person("E",new String[]{"D","G"});
-//		Person F = new Person("F",new String[]{"D"});
-//		Person G = new Person("G",new String[]{"E","H"});
-//		Person H = new Person("H",new String[]{"G"});
-//		
-//		
-//		
-//		//lista de persona para simular el input
-//		TreeMap<String, Person> people = new TreeMap<>();
-//		people.put(A.getName(), A);
-//		people.put(B.getName(), B);
-//		people.put(C.getName(), C);
-//		people.put(D.getName(), D);
-//		people.put(E.getName(), E);
-//		people.put(F.getName(), F);
-//		people.put(G.getName(), G);
-//		people.put(H.getName(), H);
+		TreeMap<String, Person> people = null;
+		try {			
+			people = PeopleManager.getPeople();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return;
+		}
 		
-		//construye el grafo
-				Person A = new Person("1","A",new String[]{"B"});
-				Person B = new Person("2","B",new String[]{"A","C","D"});
-				Person C = new Person("1","C",new String[]{"B"});
-				Person D = new Person("2","D",new String[]{"B","E","F"});
-				Person E = new Person("1","E",new String[]{"D","G"});
-				Person F = new Person("2","F",new String[]{"D"});
-				Person G = new Person("1","G",new String[]{"E","H"});
-				Person H = new Person("2","H",new String[]{"G"});
-				
-				
-				
-				//lista de persona para simular el input
-				TreeMap<String, Person> people = new TreeMap<>();
-				people.put(A.getName(), A);
-				people.put(B.getName(), B);
-				people.put(C.getName(), C);
-				people.put(D.getName(), D);
-				people.put(E.getName(), E);
-				people.put(F.getName(), F);
-				people.put(G.getName(), G);
-				people.put(H.getName(), H);
+		String name = "Marta Rodriguez";
+		String field = "http://xmlns.com/foaf/0.1/title";
+		String value = "Sr";
 		
-		//busca los amigos hasta el nivel cuatro de a
-		String[] friends = GraphSearcher.levelSearch(7, B, people);
+		String[] friendsWCommonValue = null;
 		
+		try {
+		
+			friendsWCommonValue = GraphSearcher.levelSearchWValue(1, name, field, value, people);
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		
+		System.out.println("friends: " + friendsWCommonValue.length);
+		for(String friend : friendsWCommonValue) {
+			System.out.println("# " + friend);
+		}
+		
+		String[] friends = null;
+		
+		System.out.println("More Friends");
+		friends = GraphSearcher.levelSearch(3, name, people);
 		for(String friend : friends) {
 			System.out.println("# " + friend);
 		}
 		
-		String[] friendsWCommonValue = GraphSearcher.levelSearchWValue(7, H, people);
-		
-		for(String friend : friendsWCommonValue) {
-			System.out.println("# " + friend);
-		}
 	}
-
 }
