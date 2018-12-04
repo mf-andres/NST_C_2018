@@ -30,13 +30,10 @@ public class ReadFoaf {
     static File foaf8 = new File("foaf8.rdf");
     static File foaf9 = new File("foaf9.rdf");
     static File foaf10 = new File("foaf10.rdf");
-    
+
     static ArrayList<File> ficheros = new ArrayList();
-    
-    
 
     public static int findShortestPath(File file1, File file2) throws IOException {
-        
 
         boolean primerOrden = false, segundoOrden = false, tercerOrden = false;
 
@@ -53,9 +50,10 @@ public class ReadFoaf {
         ResultSet resultado = query(cadena, file1);
 
         RDFNode name = resultado.nextSolution().get("name");
-             //   System.out.println("name: " + name);
 
-        // leemos los friends
+        
+        // leemos los amigos a partir de la etiqueta alsoKnows
+        
         String queryString
                 = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
                 + "SELECT ?friendName "
@@ -79,8 +77,11 @@ public class ReadFoaf {
 
         String[] vAmigos = amigos.toArray(new String[0]);
 
-        /////// segundo foaf
+        // Procesado del segundo FOAF
+        
         ResultSet results2 = query(queryString, file2);
+        ResultSet resultado2 = query(cadena, file2);
+        RDFNode nombre = resultado2.nextSolution().get("name");
 
         ArrayList<String> friends = new ArrayList<>();
 
@@ -94,19 +95,19 @@ public class ReadFoaf {
 
         String[] vFriends = friends.toArray(new String[0]);
 
-        for (int i = 0; i < vAmigos.length; i++) {
-            System.out.println(vAmigos[i]);
-        }
-        System.out.println("-------------");
-        for (int i = 0; i < vFriends.length; i++) {
-            System.out.println(vFriends[i]);
-        }
-
+        
+      
         for (int i = 0; i < vFriends.length; i++) {
             if (vFriends[i].equalsIgnoreCase(name.toString())) {
                 primerOrden = true;
-                return 1;
-            } // amigos de primer orden
+                return 1; // amigos de primer orden
+            } 
+        }
+
+        for (int i = 0; i < vAmigos.length; i++) {
+            if (vAmigos[i].equalsIgnoreCase(nombre.toString())) {
+                return 1; // amigos de primer orden
+            }
         }
 
         for (int i = 0; i < vAmigos.length; i++) {
@@ -118,93 +119,11 @@ public class ReadFoaf {
             }
         }
 
-        // si llega aqui, no es ni primer orden ni segundo orden
-        //leemos todos los amigos y vemos si hay alguno en común para nivel 3
-       
-
-        String[] fullFriends = null;
-        for (int i = 0; i < vFriends.length; i++) {
-           // System.out.println("fff:" + vFriends[i]);
-           fullFriends = procesaFoaf(vFriends[i]);
-
-        }
-        
-        for(int i = 0; i < fullFriends.length; i++){
-            System.out.println("FRIEND: " + fullFriends[i]);
-        }
-        
-        for(int i = 0; i < vAmigos.length; i++){
-            for(int j = 0; j < fullFriends.length; j++){
-                if(vAmigos[i].equalsIgnoreCase(fullFriends[j])) {
-                    tercerOrden = true;
-                    return 3;
-                }
-            }
-        }
-        
-        if(!primerOrden && !segundoOrden && !tercerOrden) return 4;
-
-       return -1;
-
+        return 3; // amigos de tercer orden
     }
 
-    public static String[] procesaFoaf(String amigo) throws IOException {
-        
-        boolean esFichero = true;
-        String name = "";
-        String[] fullFriends = null;
-        
-        for(int i = 0; i < ficheros.size(); i++){ 
-            name = getMainName(ficheros.get(i).toString());
-         //  System.out.println(name + "________" +  amigo);
-            if(name.equalsIgnoreCase(amigo)){ // si es el nombre correcto, leemos todos sus amigos
-              //  System.out.println("NOMBRE: " +ficheros.get(i).toString() );
-                fullFriends = getAllFriends(ficheros.get(i).toString());
-            }
-        }
+    public static String getMainName(String fichero) throws IOException {
 
-        
-        
-        return fullFriends;
-        
-    }
-    
-    
-    public static String[] getAllFriends(String fichero) throws IOException{
-     
-        
-        
-         String queryString
-                = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
-                + "SELECT ?friendName "
-                + "WHERE {"
-                + "?doc foaf:primaryTopic ?me ."
-                + "?me foaf:knows ?friend ."
-                + "?friend foaf:name ?friendName"
-                + "}";
-
-        ResultSet results1 = query(queryString, new File(fichero));
-
-        ArrayList<String> amigos = new ArrayList<>();
-
-        while (results1.hasNext()) {
-
-            QuerySolution qsol = results1.next();
-            RDFNode friendName = qsol.get("friendName");
-
-            amigos.add(friendName.toString());
-        }
-        
-        String[] friends = amigos.toArray(new String[0]); 
-      
-        
-        return friends;
-     }
-    
-    
-    
-    public static String getMainName(String fichero) throws IOException{
-        
         String cadena
                 = "PREFIX foaf: <http://xmlns.com/foaf/0.1/>"
                 + "PREFIX rdfsynt: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
@@ -218,8 +137,22 @@ public class ReadFoaf {
 
         RDFNode name = resultado.nextSolution().get("name");
         return name.toString();
-        
+
     }
+    
+
+    static public File getFoaf(String nombre) throws IOException {
+
+        for (int i = 0; i < ficheros.size(); i++) {
+            String n = getMainName(ficheros.get(i).toString());
+            if (n.equalsIgnoreCase(nombre)) {
+                return ficheros.get(i);
+            }
+        }
+
+        return null;
+    }
+    
 
     static private ResultSet query(String queryString, File file) throws IOException {
 
@@ -242,7 +175,7 @@ public class ReadFoaf {
     }
 
     public static void main(String[] args) throws IOException {
-        
+
         ficheros.add(foaf1);
         ficheros.add(foaf2);
         ficheros.add(foaf3);
@@ -254,13 +187,18 @@ public class ReadFoaf {
         ficheros.add(foaf9);
         ficheros.add(foaf10);
 
-        File file1 = new File("foaf1.rdf");
-        File file2 = new File("foaf5.rdf");
+        // Introduce los nombres sobre los que hacer la busqueda
+        
+        String nombre1 = "Iago Tudela";
+        String nombre2 = "Abel Caballero";
+
+        File file1 = getFoaf(nombre1);
+        File file2 = getFoaf(nombre2);
 
         int distancia = 0;
 
         distancia = findShortestPath(file1, file2);
-        System.out.println(distancia);
+        System.out.println("Distancia entre " + nombre1 + " y " + nombre2 + ": " + distancia);
 
     }
 
