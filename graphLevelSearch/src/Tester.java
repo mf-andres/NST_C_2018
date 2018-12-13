@@ -12,10 +12,10 @@ public class Tester {
 			e1.printStackTrace();
 			return;
 		}
-		
-		String name = "Marta Rodriguez";
+		 
+		String name = "Luis Sabucedo";
 		String field = "http://xmlns.com/foaf/0.1/title";
-		String value = "Sr";
+		String value = "Sra";
 		
 		String[] friendsWCommonValue = null;
 		
@@ -37,7 +37,7 @@ public class Tester {
 		String[] friends = null;
 		
 		System.out.println("More Friends");
-		friends = GraphSearcher.levelSearch(3, name, people);
+		friends = GraphSearcher.levelSearch(4, name, people);
 		for(String friend : friends) {
 			System.out.println("# " + friend);
 		}
